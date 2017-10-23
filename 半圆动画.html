@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<style type="text/css">
+	*{
+			margin: 0;
+			padding: 0;
+		}
+		body{
+			font-family: '微软雅黑';
+		}
+		a{
+			text-decoration: none;
+			color: #fff;
+		}
+		.nav-wrap{
+			position: relative;
+			width: 200px;
+			height: 200px;
+			border-radius: 100%;
+			margin: 50px auto;
+		}
+		.nav-wrap .nav{
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			transform: scale(0);
+			transition: all 1s ease-out;
+		}
+		.nav-wrap.active .nav{
+			transform: scale(1);
+		}
+		.nav-wrap .main-nav{
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%,-50%);
+			width: 40px;
+			height: 40px;
+			background: blue;
+			text-align: center;
+			line-height: 40px;
+			font-size: 12px;
+			border-radius: 100%;
+			cursor: pointer;
+		}
+		.nav-wrap .nav li{
+			list-style: none;
+			width: 40px;
+			height: 40px;
+			position: absolute;
+			background: blue;
+			text-align: center;
+			line-height: 40px;
+			border-radius: 100%;
+			transform: translate(-50%,-50%);
+			font-size: 12px;
+			cursor: pointer;
+		}
+		
+	</style>
+</head>
+<body>
+<div class="nav-wrap">
+		<ul class="nav">
+			<li><a href="#">menu</a></li>
+			<li><a href="#">menu</a></li>
+			<li><a href="#">menu</a></li>
+			<li><a href="#">menu</a></li>
+		</ul>
+		<a class="main-nav">点我</a>
+	</div>
+</body>
+<script type="text/javascript" src="http://s0.qhimg.com/lib/jquery/183.js"></script>
+<script type="text/javascript">
+(function(){
+		$('.nav-wrap').on('click','.main-nav',function(e){
+			e.preventDefault();
+
+			var _this_ = $(this);
+			navWrap=_this_.closest('.nav-wrap');
+			navs=navWrap.find('.nav li');
+
+			var isLocated=false;
+			if(!navWrap.hasClass('active')){
+				var radius=navWrap.width()/2;
+				var gap=120/navs.length;
+
+				$.each(navs,function(index,item){
+					var myAngle=(-90+gap*index)*(Math.PI/180);
+
+					var myX=radius+radius*Math.cos(myAngle),
+						myY=radius+radius*Math.sin(myAngle);
+
+					
+						$(this).css({
+						left:myX+'px',
+						top:myY+'px'});
+					
+				});
+				isLocated=true;
+			}
+			navWrap.toggleClass('active');
+		});
+	})();
+</script>
+</html>
